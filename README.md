@@ -4,6 +4,14 @@
 
 Docker with a Mac is painfully slow
 
+## Requirements
+Install docker-sync
+```
+gem install docker-sync --no-rdoc --no-ri
+docker pull eugenmayer/unison:2.51.2.1
+```
+(see "More information::Inspirated by" for further information
+
 ## [WIP] How to use
 ```
 git clone oxidfabiandockerstackv2
@@ -22,6 +30,6 @@ docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
 `docker system prune`
 
 
-## More Information
+## More information
 
-https://dienbui.medium.com/speed-up-docker-for-mac-with-docker-sync-480c65d4013a
+Inspirated by: https://dienbui.medium.com/speed-up-docker-for-mac-with-docker-sync-480c65d4013a
