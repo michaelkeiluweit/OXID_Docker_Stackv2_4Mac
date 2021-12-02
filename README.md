@@ -10,7 +10,7 @@ Install docker-sync
 gem install docker-sync --no-rdoc --no-ri
 docker pull eugenmayer/unison:2.51.2.1
 ```
-(see "More information::Inspirated by" for further information
+See "More information::Inspirated by" for further information
 
 ## [WIP] How to use
 ```
