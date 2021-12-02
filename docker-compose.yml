@@ -1,0 +1,87 @@
+version: '3.7'
+
+services:
+
+    db:
+      image: ${DB_IMAGE}
+      restart: always
+      #volumes:
+      #  - db-sync:/var/lib/mysql:nocopy
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        TZ: Europe/Berlin
+      networks:
+        - internal
+
+    php:
+      image: ghcr.io/oxidfabian/oxid-php:${PHP_VERSION}
+      restart: always
+      #volumes:
+      #  - php-www-sync:/var/www/html/:nocopy
+      #  - ${PWD}/auth.json:/tmp/auth.json
+      depends_on:
+        - db
+      networks:
+        - internal
+      environment:
+        DOMAIN: ${DOMAIN}
+        OXID_VERSION: ${OXID_VERSION}
+        OXID_EDITION: ${OXID_EDITION}
+        OXID_SERIAL: ${OXID_SERIAL}
+        OXID_DEMODATA: ${OXID_DEMODATA}
+        INSTALL_SHOP: ${INSTALL_SHOP}
+        MYSQL_HOST: db
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MEMCACHED: ${MEMCACHED}
+        XDEBUG_CONFIG: idekey=PHPSTORM
+        RUN_COMPOSER: ${RUN_COMPOSER}
+
+    webserver:
+      image: ${WEBSERVER}
+      restart: always
+      hostname: ${DOMAIN}
+      depends_on:
+        - php
+      #volumes:
+      #  - php-www-sync:/var/www/html/:nocopy
+      #  - your-app-files/config/shop.conf:/etc/nginx/conf.d/default.conf
+      #  - your-app-files/config/fastcgi_params.oxid:/etc/nginx/conf.d/fastcgi_params.oxid
+      #  - your-app-files/config/upstreams.conf:/etc/nginx/conf.d/upstreams.conf
+      #  - your-app-files/config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      ports:
+        - ${WEBSERVER_PORT}:80
+      networks:
+        internal:
+          aliases:
+            - ${DOMAIN}
+
+    mailhog:
+      image: mailhog/mailhog:latest
+      restart: always
+      ports:
+        - ${MAILHOG_PORT}:8025
+      networks:
+      - internal
+
+    memcached:
+      image: memcached:alpine
+      networks:
+      - internal
+
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - ${ADMINER_PORT}:8080
+      networks:
+      - internal
+
+networks:
+  internal:
