@@ -14,7 +14,7 @@ See "More information::Inspirated by" for further information
 
 ## [WIP] How to use
 ```
-git clone https://github.com/OXIDFabian/oxid-php.git
+git clone https://github.com/OXIDFabian/OXID_Docker_Stackv2
 git clone https://github.com/michaelkeiluweit/OXID_Docker_Stackv2_4Mac.git docker-sync
 cp docker-sync/docker-compose.yml docker-sync/docker-compose-dev.yml docker-sync/docker-sync.yaml ./
 
