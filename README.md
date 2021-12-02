@@ -1,4 +1,4 @@
-# Projects Namme
+# Projects Name
 
 ## [WIP] About
 
@@ -20,3 +20,8 @@ docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
 
 ### Error response from daemon: network 8bf[...]c77 not found
 `docker system prune`
+
+
+## More Information
+
+https://dienbui.medium.com/speed-up-docker-for-mac-with-docker-sync-480c65d4013a
